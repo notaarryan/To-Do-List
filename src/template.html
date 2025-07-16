@@ -4,11 +4,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg" href="./images/check-all.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@400..700&family=Lexend+Zetta:wght@100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Oswald:wght@200..700&family=Sansita+Swashed:wght@300..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=VT323&family=WDXL+Lubrifont+TC&display=swap"
+        rel="stylesheet">
     <title>To Do List</title>
 </head>
 
 <body>
-    
+    <header>
+        <img src="./images/icons8-double-check-96.png">
+        <div class="title">ToDo List</div>
+    </header>
+    <div class="content">
+        <div class="menu">
+            <div class="inbox-btn-container">
+                <button id="inbox-btn">
+                    <img src="./images/inbox.svg">
+                    <div class="subtitle">
+                        Inbox
+                    </div>
+                </button>
+            </div>
+            <div class="today-btn-container">
+                <button id="today-btn">
+                    <img src="./images/calendar-today.svg">
+                    <div class="subtitle">
+                        Today
+                    </div>
+                </button>
+            </div>
+            <div class="this-week-btn-container">
+                <button id="this-week-btn">
+                    <img src="./images/calendar-week.svg">
+                    <div class="subtitle">
+                        This Week
+                    </div>
+                </button>
+            </div>
+            <div class="projects-container">
+                <div id="projects-title">
+                    Projects
+                </div>
+                <div id="project-btn-container">
+                    <button id="project-btn">
+                        <img src="./images/list-box-outline.svg">
+                        <div class="subtitle">
+                            Study
+                        </div>
+                    </button>
+                    <button id="add-project-btn">
+                        <img src="./images/plus.svg">
+                        <div class="subtitle">
+                            Add Project
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="main-content-container">
+            <div class="main-content-title">
+                Inbox
+            </div>
+            <div class="main-content">
+                <button id="add-task">
+                    <img src="./images/plus.svg">
+                    <div class="subtitle">
+                        Add Task
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
