@@ -14,6 +14,56 @@
 </head>
 
 <body>
+    <dialog id="new-project-dialog">
+        <form id="new-project-dialog-form" method="dialog">
+            <div>
+                <label for="project-title-input">Project Title</label>
+                <input type="text" name="project-title" id="project-title-input">
+            </div>
+            <button type="submit">
+                Submit
+            </button>
+        </form>
+    </dialog>
+
+    <dialog id="new-task-dialog">
+        <form id="new-task-dialog-form" method="dialog">
+            <div>
+                <label for="task-title-input">Task Title</label>
+                <input type="text" name="task-title" id="task-title-input">
+            </div>
+            <div>
+                <label for="task-description-input">Task description</label>
+                <input type="text" name="task-description" id="task-description-input">
+            </div>
+
+            <div>
+                <label for="task-due-date-input">Task Due Date</label>
+                <input type="text" name="task-due-date" id="task-due-date-input">
+            </div>
+
+            <div>
+                <label for="task-priority">Task Priority</label>
+                <select id="task-priority-input" name="task-priority">
+                    <option disabled selected value>-- select an option --</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="task-notes-input">Task Notes (Optional)</label>
+                <textarea name="task-notes" id="task-notes-input" cols="20" rows="10"></textarea>
+            </div>
+
+
+            <button type="submit">
+                Submit
+            </button>
+        </form>
+    </dialog>
+
     <header>
         <img src="./images/icons8-double-check-96.png">
         <div class="title">ToDo List</div>
@@ -28,7 +78,7 @@
                     </div>
                 </button>
             </div>
-            <div class="today-btn-container">
+            <!-- <div class="today-btn-container">
                 <button id="today-btn">
                     <img src="./images/calendar-today.svg">
                     <div class="subtitle">
@@ -49,12 +99,6 @@
                     Projects
                 </div>
                 <div id="project-btn-container">
-                    <button id="project-btn">
-                        <img src="./images/list-box-outline.svg">
-                        <div class="subtitle">
-                            Study
-                        </div>
-                    </button>
                     <button id="add-project-btn">
                         <img src="./images/plus.svg">
                         <div class="subtitle">
@@ -62,13 +106,13 @@
                         </div>
                     </button>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="main-content-container">
             <div class="main-content-title">
                 Inbox
             </div>
-            <div class="main-content">
+            <div class="main-content inbox">
                 <button id="add-task">
                     <img src="./images/plus.svg">
                     <div class="subtitle">

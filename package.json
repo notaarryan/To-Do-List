@@ -12,7 +12,10 @@
   "author": "Aryan Parmar",
   "license": "MIT",
   "devDependencies": {
+    "@eslint/js": "^9.31.0",
     "css-loader": "^7.1.2",
+    "eslint": "^9.31.0",
+    "globals": "^16.3.0",
     "html-loader": "^5.1.0",
     "html-webpack-plugin": "^5.6.3",
     "style-loader": "^4.0.0",

@@ -13,6 +13,18 @@
     box-sizing: border-box;
 }
 
+select:focus {
+    outline: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+input {
+    font-family: inherit;
+}
+
 body {
     height: 100vh;
     display: grid;
@@ -125,7 +137,14 @@ div.main-content-container>div.main-content-title {
     font-weight: bold;
 }
 
-div.main-content-container>div.main-content>button#add-task {
+div.main-content-container>div.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: min(20px, 5vw);
+}
+
+div.main-content-container>div.main-content>button#add-task,
+div.main-content-container>div.main-content>div.task {
     width: 100%;
     padding: min(15px, 2%) min(10px, 5%);
     display: flex;
@@ -136,10 +155,160 @@ div.main-content-container>div.main-content>button#add-task {
     border-radius: 5px;
 }
 
+div.main-content-container>div.main-content>div.task {
+    padding: min(20px, 5vw);
+    display: flex;
+    flex-direction: column;
+    gap: min(30px, 5vw);
+}
+
+div.main-content-container>div.main-content>div.task:hover {
+    cursor: pointer;
+}
+
+div.main-content-container>div.main-content>div.task>div.task-description-container,
+div.main-content-container>div.main-content>div.task>div.task-notes-container {
+    width: 100%;
+    display: flex;
+    padding: min(20px, 5vw);
+    flex-direction: column;
+    gap: min(20px, 5vw);
+}
+
+div.main-content-container>div.main-content>div.task>div.task-description-container>div.task-description-title,
+div.main-content-container>div.main-content>div.task>div.task-notes-container>div.task-notes-title {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: bold;
+}
+
+div.main-content-container>div.main-content>div.task>div.task-description-container>div.task-description,
+div.main-content-container>div.main-content>div.task>div.task-notes-container>div.task-notes {
+    padding: 0 10%;
+}
+
+div.main-content-container>div.main-content>div.task>form {
+    font-size: clamp(0.5rem, 1.5vw, 1rem);
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 5px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+div.main-content-container>div.main-content>div.task>form * {
+    font-size: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+div.main-content-container>div.main-content>div.task>form>input {
+    padding: min(5px, 1vw) min(10px, 2vw) min(2px, 0.5vw) min(10px, 2vw);
+    width: min(500px, 30%);
+    border: none;
+    background-color: inherit;
+    border-bottom: 1px solid black;
+}
+
+div.main-content-container>div.main-content>div.task>form>div.priority-container>select:hover {
+    cursor: pointer;
+}
+
+div.main-content-container>div.main-content>div.task>form>input:focus:valid {
+    border-bottom: 1px solid green;
+}
+
+div.main-content-container>div.main-content>div.task>form>input:focus:invalid {
+    border-bottom: 1px solid red;
+}
+
+input:focus {
+    outline: none;
+}
+
 div.main-content-container>div.main-content>button#add-task>img {
     width: min(30px, 30%);
 }
 
 div.main-content-container>div.main-content>button#add-task>div.subtitle {
     font-size: clamp(0.75rem, 1vw, 1rem);
+}
+
+div.main-content-container>div.main-content>div.task.high {
+    border-left-style: solid;
+    border-left-color: red;
+    border-left-width: clamp(2px, 0.25vw, 10px);
+}
+
+div.main-content-container>div.main-content>div.task.medium {
+    border-left-style: solid;
+    border-left-color: yellow;
+    border-left-width: clamp(2px, 0.25vw, 10px);
+}
+
+div.main-content-container>div.main-content>div.task.low {
+    border-left-style: solid;
+    border-left-color: green;
+    border-left-width: clamp(2px, 0.25vw, 10px);
+}
+
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2rem;
+    border: none;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+dialog form div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+dialog input,
+dialog select,
+dialog textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+dialog input:valid,
+dialog select:valid {
+    border: 1px solid green;
+}
+
+dialog input:invalid,
+dialog select:invalid {
+    border: 1px solid red;
+}
+
+dialog button[type="submit"] {
+    align-self: center;
+    padding: 0.5rem 1rem;
+    background-color: var(--button-background-color);
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
 }
