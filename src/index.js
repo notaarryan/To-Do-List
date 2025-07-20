@@ -8,8 +8,8 @@ class App {
     /^\d{1,2}\s+(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{4}$/;
   constructor() {
     this.#cacheDom();
-    this.#addEventListeners();
     this.inbox = new Inbox();
+    this.#addEventListeners();
   }
 
   #projects = [];

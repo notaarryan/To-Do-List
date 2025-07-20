@@ -1,3 +1,4 @@
+import { de } from "date-fns/locale";
 import { TodoItem } from "./todo";
 import { format } from "date-fns";
 
@@ -17,7 +18,7 @@ export class Inbox {
 
   newIboxTask(title, description, dueDate, priority, notes, inboxArray) {
     inboxArray.push(new TodoItem(title, description, dueDate, priority, notes));
-    localStorage.setItem("inbox", inboxArray);
+    localStorage.setItem("inbox", JSON.stringify(inboxArray));
   }
 
   formatDate(date) {
@@ -129,6 +130,22 @@ export class Inbox {
             descriptionContainer.appendChild(descriptionText);
 
             toDoDiv.appendChild(descriptionContainer);
+
+            const deleteButton = document.createElement("button");
+            deleteButton.id = "task-delete-button";
+            deleteButton.innerText = "Delete Task";
+
+            deleteButton.addEventListener("click", (e) => {
+              e.stopPropagation();
+              const index = inboxArray.indexOf(ToDo);
+              if (index > -1) {
+                inboxArray.splice(index, 1);
+                localStorage.setItem("inbox", JSON.stringify(inboxArray));
+              }
+              this.mainContentDiv.removeChild(toDoDiv);
+            });
+
+            toDoDiv.appendChild(deleteButton);
             console.log(ToDo.notes);
             if (ToDo.notes) {
               const notesContainer = document.createElement("div");

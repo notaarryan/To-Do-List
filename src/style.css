@@ -312,3 +312,20 @@ dialog button[type="submit"] {
     font-weight: bold;
     cursor: pointer;
 }
+
+#task-delete-button {
+    padding: min(12px, 1.5%) min(10px, 3%);
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: var(--button-background-color);
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#task-delete-button:hover {
+    cursor: pointer;
+    background-color: var(--active-button-background-color);
+}
