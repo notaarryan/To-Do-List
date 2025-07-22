@@ -1,47 +1,89 @@
 import "./style.css";
-import { TodoItem } from "./todo";
 import { Project } from "./projects";
 import { Inbox } from "./inbox";
+import plusImage from "./images/plus.svg";
+import { Today } from "./today";
+import { isToday, isThisWeek } from "date-fns";
+import { ThisWeek } from "./thisWeek";
 
 class App {
   #dateRegex =
     /^\d{1,2}\s+(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{4}$/;
   constructor() {
     this.#cacheDom();
-    this.inbox = new Inbox();
     this.#addEventListeners();
   }
 
   #projects = [];
   #inboxToDos = [];
+  #todayToDos = [];
+  #thisWeekToDos = [];
 
   #cacheDom() {
-    this.addNewTaskButton = document.getElementById("add-task");
+    this.inboxButton = document.getElementById("inbox-btn");
+    this.mainContentTitle = document.querySelector(".main-content-title");
     this.addNewTaskDialog = document.getElementById("new-task-dialog");
     this.addNewTaskForm = document.getElementById("new-task-dialog-form");
     this.mainContentDiv = document.querySelector(".main-content");
+    this.mainContentDivContainer = document.querySelector(
+      ".main-content-container"
+    );
     this.taskTitleInput = document.getElementById("task-title-input");
     this.taskDescriptionInput = document.getElementById(
       "task-description-input"
     );
     this.taskDueDateInput = document.getElementById("task-due-date-input");
     this.taskPriorityInput = document.getElementById("task-priority-input");
+    this.todayButton = document.getElementById("today-btn");
+    this.thisWeekButton = document.getElementById("this-week-btn");
   }
 
   #addEventListeners() {
     document.addEventListener("DOMContentLoaded", () => {
+      this.#loadInbox();
       this.#inboxToDos = JSON.parse(localStorage.getItem("inbox")) || [];
       if (this.#inboxToDos.length > 0) {
         this.inbox.renderInboxTasks(this.#inboxToDos);
       }
+      this.#todayToDos = this.#inboxToDos.filter((todo) => {
+        if (isToday(todo.dueDate)) {
+          return todo;
+        }
+      });
+
+      this.#thisWeekToDos = this.#inboxToDos.filter((todo) => {
+        if (isThisWeek(todo.dueDate)) {
+          return todo;
+        }
+      });
     });
 
-    this.addNewTaskButton.addEventListener("click", () => {
-      this.checkDescriptionValidity();
-      this.checkTitleValidity();
-      this.checkDueDateValidity();
-      this.checkPriorityValidity();
-      this.addNewTaskDialog.showModal();
+    this.inboxButton.addEventListener("click", () => {
+      if (!this.mainContentDiv.classList.contains("inbox")) {
+        this.#loadInbox();
+      }
+    });
+
+    this.todayButton.addEventListener("click", () => {
+      if (!this.mainContentDiv.classList.contains("today")) {
+        this.#todayToDos = this.#inboxToDos.filter((todo) => {
+          if (isToday(todo.dueDate)) {
+            return todo;
+          }
+        });
+        this.#loadToday();
+      }
+    });
+
+    this.thisWeekButton.addEventListener("click", () => {
+      if (!this.mainContentDiv.classList.contains("this-week")) {
+        this.#thisWeekToDos = this.#inboxToDos.filter((todo) => {
+          if (isThisWeek(todo.dueDate)) {
+            return todo;
+          }
+        });
+        this.#loadThisWeek();
+      }
     });
 
     this.addNewTaskForm.addEventListener("submit", (e) => {
@@ -67,7 +109,9 @@ class App {
             dueDate,
             priority,
             notes,
-            this.#inboxToDos
+            this.#inboxToDos,
+            this.#todayToDos,
+            this.#thisWeekToDos
           );
           this.inbox.renderInboxTasks(this.#inboxToDos);
         }
@@ -91,6 +135,50 @@ class App {
     this.taskPriorityInput.addEventListener("input", () => {
       this.checkPriorityValidity();
     });
+  }
+
+  #loadInbox() {
+    this.mainContentDiv.classList.remove("today");
+    this.mainContentDiv.classList.remove("this-week");
+    this.mainContentDiv.classList.add("inbox");
+    this.mainContentTitle.innerText = "Inbox";
+    const addTaskButton = document.createElement("button");
+    addTaskButton.id = "add-task";
+    const image = document.createElement("img");
+    image.src = plusImage;
+    const subDiv = document.createElement("div");
+    subDiv.classList.add("subtitle");
+    subDiv.innerText = "Add Task";
+    addTaskButton.appendChild(image);
+    addTaskButton.appendChild(subDiv);
+    this.mainContentDiv.appendChild(addTaskButton);
+    addTaskButton.addEventListener("click", () => {
+      this.checkDescriptionValidity();
+      this.checkTitleValidity();
+      this.checkDueDateValidity();
+      this.checkPriorityValidity();
+      this.addNewTaskDialog.showModal();
+    });
+    this.inbox = new Inbox();
+    this.inbox.renderInboxTasks(this.#inboxToDos);
+  }
+
+  #loadToday() {
+    this.mainContentDiv.classList.remove("inbox");
+    this.mainContentDiv.classList.remove("this-week");
+    this.mainContentDiv.classList.add("today");
+    this.mainContentTitle.innerText = "Today";
+    const today = new Today();
+    today.renderTodayTasks(this.#todayToDos);
+  }
+
+  #loadThisWeek() {
+    this.mainContentDiv.classList.remove("inbox");
+    this.mainContentDiv.classList.remove("today");
+    this.mainContentDiv.classList.add("this-week");
+    this.mainContentTitle.innerText = "This Week";
+    const thisWeek = new ThisWeek();
+    thisWeek.renderThisWeekTasks(this.#thisWeekToDos);
   }
 
   checkTitleValidity() {

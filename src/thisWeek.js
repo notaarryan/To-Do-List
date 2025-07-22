@@ -1,7 +1,6 @@
-import { TodoItem } from "./todo";
-import { format, isToday, isThisWeek } from "date-fns";
+import { format } from "date-fns";
 
-export class Inbox {
+export class ThisWeek {
   #dateRegex =
     /^\d{1,2}\s+(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{4}$/;
   constructor() {
@@ -9,31 +8,9 @@ export class Inbox {
   }
 
   #cacheDom() {
-    this.addNewTaskButton = document.getElementById("add-task");
     this.addNewTaskDialog = document.getElementById("new-task-dialog");
     this.addNewTaskForm = document.getElementById("new-task-dialog-form");
     this.mainContentDiv = document.querySelector("div.main-content");
-  }
-
-  newIboxTask(
-    title,
-    description,
-    dueDate,
-    priority,
-    notes,
-    inboxArray,
-    todayArray,
-    thisWeekArray
-  ) {
-    const item = new TodoItem(title, description, dueDate, priority, notes);
-    inboxArray.push(item);
-    if (isToday(item.dueDate)) {
-      todayArray.push(item);
-    }
-    if (isThisWeek(item.dueDate)) {
-      thisWeekArray.push(item);
-    }
-    localStorage.setItem("inbox", JSON.stringify(inboxArray));
   }
 
   formatDate(date) {
@@ -41,12 +18,12 @@ export class Inbox {
     return !isNaN(parsed) ? format(parsed, "dd-MM-yyyy") : "";
   }
 
-  renderInboxTasks(inboxArray) {
-    while (this.mainContentDiv.firstChild !== this.addNewTaskButton) {
+  renderThisWeekTasks(thisWeekArray) {
+    while (this.mainContentDiv.firstChild) {
       this.mainContentDiv.removeChild(this.mainContentDiv.firstChild);
     }
 
-    inboxArray.forEach((ToDo) => {
+    thisWeekArray.forEach((ToDo) => {
       const toDoDiv = document.createElement("div");
       toDoDiv.classList.add("task", ToDo.priority.toLowerCase());
 
@@ -96,7 +73,7 @@ export class Inbox {
         if (e.key === "Enter" && titleInput.checkValidity()) {
           e.preventDefault();
           ToDo.title = titleInput.value;
-          this.renderInboxTasks(inboxArray);
+          this.renderInboxTasks(thisWeekArray);
         } else {
           titleInput.reportValidity();
         }
@@ -104,19 +81,19 @@ export class Inbox {
 
       prioritySelect.addEventListener("change", () => {
         ToDo.priority = prioritySelect.value;
-        this.renderInboxTasks(inboxArray);
+        this.renderInboxTasks(thisWeekArray);
       });
 
       prioritySelect.addEventListener("input", () => {
         ToDo.priority = prioritySelect.value;
-        this.renderInboxTasks(inboxArray);
+        this.renderInboxTasks(thisWeekArray);
       });
 
       dueDateInput.addEventListener("keydown", (e) => {
         if (e.key === "Enter" && dueDateInput.checkValidity()) {
           e.preventDefault();
           ToDo.dueDate = dueDateInput.value;
-          this.renderInboxTasks(inboxArray);
+          this.renderInboxTasks(thisWeekArray);
         } else {
           dueDateInput.reportValidity();
         }
@@ -152,10 +129,10 @@ export class Inbox {
 
             deleteButton.addEventListener("click", (e) => {
               e.stopPropagation();
-              const index = inboxArray.indexOf(ToDo);
+              const index = thisWeekArray.indexOf(ToDo);
               if (index > -1) {
-                inboxArray.splice(index, 1);
-                localStorage.setItem("inbox", JSON.stringify(inboxArray));
+                thisWeekArray.splice(index, 1);
+                localStorage.setItem("inbox", JSON.stringify(thisWeekArray));
               }
               this.mainContentDiv.removeChild(toDoDiv);
             });
